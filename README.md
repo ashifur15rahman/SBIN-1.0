@@ -60,3 +60,7 @@ pip install -r requirements.txt
 - The code has been updated to fix typos and improve readability.
 - The relation tensor constraint uses KMeans clustering to enforce geometric consistency.
 - The model is designed for temporal data with underlying physical dynamics, making it suitable for applications in physics, engineering, and climate science.
+## License
+
+This publication is licensed under **Creative Commons Attribution‑NonCommercial‑NoDerivatives 4.0 International (CC BY‑NC‑ND 4.0)**.  
+You may share this work non‑commercially in its original form, with proper attribution.  
