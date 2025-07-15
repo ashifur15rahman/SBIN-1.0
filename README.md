@@ -1,17 +1,61 @@
-# SBIN-1.0
-Model Description
-The TemporalPhysicsNet is a physics-informed neural network designed to model temporal dynamics in time-series data, ensuring that predictions adhere to physical laws. It leverages a 1D Convolutional Neural Network (CNN) architecture to process sequential input data and incorporates physics-based constraints during training. This makes it particularly suitable for applications in physics, engineering, and navigation, where physical consistency is as important as predictive accuracy.
+# TemporalPhysicsNet
 
-Key Components
-Input: The model accepts a sequence of features (e.g., latitude, longitude, velocities like vn, ve, etc.) along with a time dimension. For the given dataset, these could include columns such as lat, lon, vn, ve, roll, pitch, yaw, etc.
-Architecture:
-1D CNN: A convolutional network with ReLU activations processes the input sequence to predict a coordinate sequence, denoted as θ, which represents the system's state over time.
-Mass and Potential Prediction: Two additional 1x1 convolutional layers predict the mass (diagonal entries) and a potential scalar from θ and time, capturing the physical properties of the system.
-Physics-Informed Losses: The model enforces physical consistency through specialized loss functions:
-Euler-Lagrange Residual: Ensures the dynamics satisfy the Euler-Lagrange equations, a cornerstone of classical mechanics for describing motion.
-Hamiltonian Residual: Enforces conservation of the Hamiltonian, representing the system's total energy.
-Brachistochrone Cost: Optimizes for time-optimal trajectories, inspired by the Brachistochrone problem in physics.
-Relation Tensor Constraint: Uses clustering to maintain geometric consistency across similar data points.
-Training: The model is trained using the Adam optimizer with a default learning rate of 1e-3 over 100 epochs, balancing data-driven learning with physical constraints.
-Purpose
-The TemporalPhysicsNet is designed to handle time-series data with underlying physical dynamics, such as navigation or motion tracking, as seen in the provided dataset. By integrating physical laws into the learning process, it produces predictions that are both accurate and physically plausible, making it ideal for scenarios with noisy or limited data.
+This repository contains the implementation of the `TemporalPhysicsNet` model, a physics-informed neural network designed for temporal modeling of time series data. The model integrates physical laws through Lagrangian, Hamiltonian, and Brachistochrone losses to ensure predictions are physically consistent.
+
+## Overview
+
+The `TemporalPhysicsNet` model is a 1D convolutional neural network (CNN) that maps input features and time to a sequence of coordinates (`theta`), mass (`mass`), and potential (`V`). It is trained using a combination of physics-based loss functions to ensure the learned dynamics adhere to physical laws.
+
+### Key Features
+
+- **Physics-Informed Losses**:
+  - **Euler-Lagrange Residual**: Ensures the dynamics satisfy the Euler-Lagrange equations.
+  - **Hamiltonian Residual**: Enforces conservation of the Hamiltonian (energy).
+  - **Brachistochrone Cost**: Optimizes for time-optimal trajectories.
+  - **Relation Tensor Constraint**: Enforces geometric consistency using clustering.
+
+- **Model Architecture**:
+  - A 1D CNN with ReLU activations for feature extraction.
+  - 1x1 convolutions to predict mass and potential.
+
+- **Training**:
+  - Uses Adam optimizer with a learning rate of `1e-3`.
+  - Trains for 100 epochs by default.
+
+## Usage
+
+1. **Data Preparation**:
+   - The model expects a CSV file with columns: `time`, `lat`, `lon`, `vn`, `ve`.
+   - Example: `20220712_0_1.csv`
+
+2. **Running the Code**:
+   - Ensure all dependencies are installed (see `requirements.txt`).
+   - Run the script: `python temporal_physics_net.py`
+
+3. **Customization**:
+   - Adjust hyperparameters like `epochs`, `lr`, and `clusters` in the `train` function.
+
+## Dependencies
+
+- `numpy`
+- `pandas`
+- `matplotlib`
+- `scikit-learn`
+- `torch`
+
+Install dependencies using:
+```bash
+pip install -r requirements.txt
+```
+
+## Code Structure
+
+- **`temporal_physics_net.py`**: Main Python file containing the model and training loop.
+- **`README.md`**: This file, providing an overview and usage instructions.
+- **`requirements.txt`**: Lists the required Python packages.
+
+## Notes
+
+- The code has been updated to fix typos and improve readability.
+- The relation tensor constraint uses KMeans clustering to enforce geometric consistency.
+- The model is designed for temporal data with underlying physical dynamics, making it suitable for applications in physics, engineering, and climate science.
