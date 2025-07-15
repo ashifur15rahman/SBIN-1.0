@@ -1,3 +1,4 @@
+#This the best working physics informed model
 # TemporalPhysicsNet
 
 This repository contains the implementation of the `TemporalPhysicsNet` model, a physics-informed neural network designed for temporal modeling of time series data. The model integrates physical laws through Lagrangian, Hamiltonian, and Brachistochrone losses to ensure predictions are physically consistent.
